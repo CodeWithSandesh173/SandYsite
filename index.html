@@ -3,57 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
+  <title>Coming Soon - CodeWithSandesh</title>
   <style>
-    /* Basic reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* Reset default margins */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
       color: white;
       text-align: center;
       overflow: hidden;
     }
 
+    .container {
+      max-width: 600px;
+    }
+
     h1 {
-      font-size: 4rem;
-      animation: fadeIn 2s ease-in-out forwards;
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
     }
 
     p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      animation: fadeIn 3s ease-in-out forwards;
-      opacity: 0;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 1.5em;
+      margin-bottom: 30px;
+    }
+
+    .countdown div {
+      background: rgba(255,255,255,0.2);
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
+    .email-input {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .email-input input {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 200px;
+    }
+
+    .email-input button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #10b981;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .email-input button:hover {
+      background-color: #059669;
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(-20px);}
+      to { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1 id="title">Coming Soon</h1>
-    <p id="message">We are launching something awesome!</p>
+  <div class="container">
+    <h1>CodeWithSandesh</h1>
+    <p>Something awesome is coming soon! Stay tuned.</p>
+    
+    <div class="countdown" id="countdown">
+      <div><span id="days">00</span> Days</div>
+      <div><span id="hours">00</span> Hours</div>
+      <div><span id="minutes">00</span> Minutes</div>
+      <div><span id="seconds">00</span> Seconds</div>
+    </div>
+
+    <div class="email-input">
+      <input type="email" placeholder="Enter your email" id="email">
+      <button onclick="subscribe()">Notify Me</button>
+    </div>
   </div>
 
   <script>
-    // Simple JS to change text after a few seconds
-    setTimeout(() => {
-      const msg = document.getElementById('message');
-      msg.textContent = "Stay tuned for updates!";
-    }, 3000);
+    // Countdown timer
+    const launchDate = new Date("2026-04-01T00:00:00").getTime();
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = launchDate - now;
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+      daysEl.textContent = days.toString().padStart(2, "0");
+      hoursEl.textContent = hours.toString().padStart(2, "0");
+      minutesEl.textContent = minutes.toString().padStart(2, "0");
+      secondsEl.textContent = seconds.toString().padStart(2, "0");
+    }, 1000);
+
+    // Subscribe function
+    function subscribe() {
+      const email = document.getElementById("email").value;
+      if(email) {
+        alert(`Thanks! We'll notify you at ${email}`);
+      } else {
+        alert("Please enter a valid email!");
+      }
+    }
   </script>
 </body>
 </html>
